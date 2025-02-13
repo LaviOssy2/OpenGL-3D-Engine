@@ -2,7 +2,7 @@
 #define MODEL_H
 
 //#include <glad/glad.h> 
-#include "BaseUtils.h"
+#include "../Utils/BaseUtils.h"
 
 #include <stb_image.h>
 #include <assimp/Importer.hpp>

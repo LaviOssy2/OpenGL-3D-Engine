@@ -20,19 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="RenderMesh.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseUtils.h" />
-    <ClInclude Include="Mathematics.h" />
-    <ClInclude Include="Physics.h" />
-    <ClInclude Include="RenderModel.h" />
-    <ClInclude Include="RenderShader.h" />
-    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="OpenGL_Rendering\RenderMesh.h" />
+    <ClInclude Include="OpenGL_Rendering\RenderModel.h" />
+    <ClInclude Include="OpenGL_Rendering\RenderShader.h" />
+    <ClInclude Include="OpenGL_Rendering\stb_image.h" />
+    <ClInclude Include="Utils\BaseUtils.h" />
+    <ClInclude Include="Utils\Mathematics.h" />
+    <ClInclude Include="Utils\Physics.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ModelShader.fs" />
-    <None Include="ModelShader.vs" />
+    <None Include="OpenGL_Rendering\ModelShader.fs" />
+    <None Include="OpenGL_Rendering\ModelShader.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

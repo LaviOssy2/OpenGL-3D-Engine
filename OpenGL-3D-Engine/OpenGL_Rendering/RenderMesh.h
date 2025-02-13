@@ -3,7 +3,7 @@
 
 //#include <glad/glad.h> // holds all OpenGL type declarations
 
-#include "BaseUtils.h"
+#include "../Utils/BaseUtils.h"
 #include "RenderShader.h"
 
 #define MAX_BONE_INFLUENCE 4

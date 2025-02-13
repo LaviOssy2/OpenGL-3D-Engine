@@ -7,6 +7,11 @@
 #include <vector>
 #include <iostream>
 
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
 using namespace std;
 using namespace glm;
 
