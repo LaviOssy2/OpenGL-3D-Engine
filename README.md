@@ -38,7 +38,7 @@ OpenGL-3D-Drone-Simulator/
 
 
 ## Preview
-![Drone Simulation Screenshot](screenshot.png) *(Replace with actual screenshot)*
+![Drone Simulation Screenshot](drone_simulation.png) *(Replace with actual screenshot)*
 
 ## Future Improvements
 - **Optimize collision system** (BVH planned)
