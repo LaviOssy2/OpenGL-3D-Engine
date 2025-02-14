@@ -1,16 +1,24 @@
+#ifndef BaseUtils_H
+#define BaseUtils_H
+
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <glm/vec3.hpp>
-#include <vector>
 #include <iostream>
-
-#include <string>
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include <memory>
+#include <random>
+#include <algorithm>
+#include <numeric> // for std::iota
+#include <limits>
+#include <set>
+#include <map>
+
 
 using namespace std;
 using namespace glm;
@@ -28,3 +36,5 @@ struct Vec3Hash {
         return std::hash<float>()(v.x) ^ std::hash<float>()(v.y) ^ std::hash<float>()(v.z);
     }
 };
+
+#endif

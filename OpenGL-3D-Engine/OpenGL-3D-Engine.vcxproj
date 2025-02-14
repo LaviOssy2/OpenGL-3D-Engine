@@ -19,13 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Core_Entities\Camera.cpp" />
+    <ClCompile Include="Core_Entities\ObjectManager.cpp" />
+    <ClCompile Include="Engine_Objects\EntityObject.cpp" />
+    <ClCompile Include="Engine_Objects\ModelObject.cpp" />
+    <ClCompile Include="Room1\Cube.cpp" />
+    <ClCompile Include="Room1\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core_Entities\Camera.h" />
+    <ClInclude Include="Core_Entities\ObjectManager.h" />
+    <ClInclude Include="Engine_Objects\CameraObject.h" />
+    <ClInclude Include="Engine_Objects\EntityObject.h" />
+    <ClInclude Include="Engine_Objects\ModelObject.h" />
+    <ClInclude Include="Engine_Objects\SceneObject.h" />
     <ClInclude Include="OpenGL_Rendering\RenderMesh.h" />
     <ClInclude Include="OpenGL_Rendering\RenderModel.h" />
     <ClInclude Include="OpenGL_Rendering\RenderShader.h" />
     <ClInclude Include="OpenGL_Rendering\stb_image.h" />
+    <ClInclude Include="Room1\Cube.h" />
     <ClInclude Include="Utils\BaseUtils.h" />
     <ClInclude Include="Utils\Mathematics.h" />
     <ClInclude Include="Utils\Physics.h" />
