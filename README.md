@@ -13,6 +13,7 @@ The key feature is its **modular design**—new models can be added to the scene
 - Dynamic **drone movement & physics**
 - Collision detection between the drone and environment
 - Real-time transformation updates
+- **Supports importing real-world 3D maps scanned by actual drones**
 
 ### 🛠️ **As an Engine**:
 - **Modular Scene Objects** (like `ModelObject`, `SceneObject`) allow **easy addition of new entities**
