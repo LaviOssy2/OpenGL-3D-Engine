@@ -17,7 +17,7 @@ void Cube::Create(GLFWwindow* window)
         AssignOBB(this->meshes[0].subBoxes[j]);
         //cout << this->meshes[0].subBoxes[j].currentPoints.size() << " these are..\n";
     }
-    this->SetEVERYTHING(vec3(0.f, 5.f, 0.f), 0, 180.f, 0, vec3(0.5f, .5f, .5f));
+    this->SetEVERYTHING(vec3(0.f, 5.f, 0.f), 0, 180.f, 0, vec3(0.2f, .2f, .2f));
     //this->YAW(45.f);
 }
 

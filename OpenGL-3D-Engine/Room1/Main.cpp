@@ -60,7 +60,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
     // --------------------------------------------------------------
 
     manager.AssignCamera(new Camera(&manager));
@@ -73,7 +73,7 @@ int main()
     float accumulator = 0.0f;
     float alpha = 0.1f; // Smoothing factor for deltaTime
 
-    Cube* c = manager.Instantiate<Cube>(window, "Drone", "Room1/Cube/Cube.obj");
+    Cube* c = manager.Instantiate<Cube>(window, "Drone", "Room1/Drone/Drone19.obj");
 
     ModelObject* m = manager.Instantiate<ModelObject>(window, "City", "Room1/City/City.obj");
     //m->model->meshes[1].color = vec4(vec3(1, 0, 0), 1.f);
@@ -158,15 +158,14 @@ int main()
         // Accumulate time to manage fixed updates
         accumulator += deltaTime;
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         manager.Update(window);
 
         while (accumulator >= fixedTimeStep) {
             manager.FixedUpdate(window, fixedTimeStep);
             accumulator -= fixedTimeStep;
         }
-
-        glClearColor(0.05f, 0.05f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         manager.Draw(window);
 

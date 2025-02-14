@@ -135,7 +135,7 @@ static glm::mat3 ComputeCovarianceMatrix(const std::vector<glm::vec3>& points) {
 // Function to compute the OBB
 static std::vector<glm::vec3> ComputeOBBCorners(const std::vector<glm::vec3>& points) {
     // Step 1: Compute the covariance matrix
-    glm::mat3 covarianceMatrix = ComputeCovarianceMatrix(points);
+    glm::mat3 covarianceMatrix = mat3(vec3(1,0,0), vec3(0,1,0), vec3(0,0,1));//ComputeCovarianceMatrix(points);
 
     // Step 2: Perform eigen decomposition
     Eigen::Matrix3f cov;

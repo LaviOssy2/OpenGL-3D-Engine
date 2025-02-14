@@ -34,7 +34,7 @@ public:
     // -----------------------
 
 
-    ModelObject(string const& name, Model* model, ObjectManager* manager, int k = 1, bool convex = false, bool presice = true);
+    ModelObject(string const& name, Model* model, ObjectManager* manager, int k = 1, bool convex = false, bool precise = false);
 
     virtual void Update(GLFWwindow* window) {}; // Static Model
     virtual void FixedUpdate(GLFWwindow* window) {};
