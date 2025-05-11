@@ -4,10 +4,12 @@
       "name": "Android NDK",
       "includePath": [
         "${workspaceFolder}/**",
+        "${workspaceFolder}/app/src/main/cpp",
+        "C:/MyApps/dev/vcpkg-master/vcpkg-master/installed/x64-windows/include",   // Add this!
         "${env:ANDROID_NDK_HOME}/sources/android/native_app_glue",
         "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include",
         "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/android",
-        "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/arm-linux-androideabi" // or x86_64, depending
+        "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/arm-linux-androideabi"
       ],
       "defines": [],
       "compilerPath": "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe",

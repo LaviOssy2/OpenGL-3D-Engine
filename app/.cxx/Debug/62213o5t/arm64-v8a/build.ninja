@@ -53,6 +53,7 @@ build CMakeFiles/native-lib.dir/app/src/main/cpp/native-lib.cpp.o: CXX_COMPILER_
   DEFINES = -Dnative_lib_EXPORTS
   DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\native-lib.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC
+  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IC:/MyApps/dev/vcpkg-master/vcpkg-master/installed/x64-windows/include
   OBJECT_DIR = CMakeFiles\native-lib.dir
   OBJECT_FILE_DIR = CMakeFiles\native-lib.dir\app\src\main\cpp
 

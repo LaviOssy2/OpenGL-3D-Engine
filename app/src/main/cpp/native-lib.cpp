@@ -1,137 +1,94 @@
-// native-lib.cpp
 #include <jni.h>
 #include <GLES3/gl3.h>
-#include <cmath>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
 
-// Vertex shader: applies a simple translate of -5 on Z and a projection matrix
-static const char* VERT_SHADER = R"(
-    #version 300 es
-    layout(location=0) in vec3 aPos;
-    uniform mat4 uMVP;
-    void main() {
-        vec4 pos = vec4(aPos, 1.0);
-        pos.z -= 5.0;
-        gl_Position = uMVP * pos;
-    }
-)";
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-// Fragment shader: solid color
-static const char* FRAG_SHADER = R"(
-    #version 300 es
-    precision mediump float;
-    out vec4 oColor;
-    void main() {
-        oColor = vec4(0.4, 0.7, 1.0, 1.0);
-    }
-)";
+#include <memory>
+#include <vector>
 
-// Cube vertices (8 corners)
-static const float CUBE_VERTS[] = {
-    -1.0f, -1.0f, -1.0f,
-     1.0f, -1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f,
-     1.0f, -1.0f,  1.0f,
-     1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f
-};
+#include "Model.h"
+#include "Shader.h"
 
-// Index data: 12 triangles (two per face)
-static const uint16_t CUBE_INDICES[] = {
-    0,1,2,  2,3,0,  // back
-    4,5,6,  6,7,4,  // front
-    0,4,7,  7,3,0,  // left
-    1,5,6,  6,2,1,  // right
-    3,2,6,  6,7,3,  // top
-    0,1,5,  5,4,0   // bottom
-};
+using namespace std;
 
-// GL objects
-static GLuint program = 0;
-static GLuint vao = 0;
-static GLint  mvpLoc = -1;
-
-// Surface dimensions
-static int surfaceW = 0;
-static int surfaceH = 1;  // avoid divide-by-zero
-
-// Compile a shader from source
-static GLuint compileShader(GLenum type, const char* src) {
-    GLuint s = glCreateShader(type);
-    glShaderSource(s, 1, &src, nullptr);
-    glCompileShader(s);
-    return s;
-}
-
-// Build a simple projection matrix (column-major)
-static void makeProjection(float* out) {
-    float aspect = float(surfaceW) / float(surfaceH);
-    float fov = 45.0f * 3.14159f / 180.0f;
-    float f = 1.0f / tanf(fov * 0.5f);
-    float near = 0.1f;
-    float far  = 100.0f;
-    // zero
-    for (int i = 0; i < 16; ++i) out[i] = 0.0f;
-    out[0]  = f / aspect;
-    out[5]  = f;
-    out[10] = -(far + near) / (far - near);
-    out[11] = -1.0f;
-    out[14] = -(2.0f * far * near) / (far - near);
-}
+static unique_ptr<Model> model;
+static unique_ptr<Shader> shader;
+static float angle = 0.0f;
+static GLint mvpLoc;
+static int surfaceW = 0, surfaceH = 1;
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_openglandroid_MainActivity_initEngine(JNIEnv*, jobject) {
-    // 1) Compile & link shaders
-    GLuint vs = compileShader(GL_VERTEX_SHADER, VERT_SHADER);
-    GLuint fs = compileShader(GL_FRAGMENT_SHADER, FRAG_SHADER);
-    program = glCreateProgram();
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    
-    // 2) Setup VAO/VBO/EBO
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+Java_com_example_openglandroid_MainActivity_initEngine(
+    JNIEnv* env,
+    jobject /* this */,
+    jobject assetManager) {
 
-    GLuint vbo, ebo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(CUBE_VERTS), CUBE_VERTS, GL_STATIC_DRAW);
+    AAssetManager* mgr = AAssetManager_fromJava(env, assetManager);
+    shader = make_unique<Shader>(
+        "shaders/ModelShader.vs",
+        "shaders/ModelShader.fs",
+        mgr);
 
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(CUBE_INDICES), CUBE_INDICES, GL_STATIC_DRAW);
+    // Cube data
+    vector<glm::vec3> verts = {
+        {-1,-1,-1}, {1,-1,-1}, {1,1,-1}, {-1,1,-1},
+        {-1,-1, 1}, {1,-1, 1}, {1,1, 1}, {-1,1, 1}
+    };
+    vector<unsigned int> inds = {
+        0,1,2, 2,3,0,
+        4,5,6, 6,7,4,
+        0,4,7, 7,3,0,
+        1,5,6, 6,2,1,
+        3,2,6, 6,7,3,
+        0,1,5, 5,4,0
+    };
+    model = make_unique<Model>(verts, inds);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glBindVertexArray(0);
-
-    // 3) Enable depth test
     glEnable(GL_DEPTH_TEST);
-
-    // 4) Get uniform location
-    mvpLoc = glGetUniformLocation(program, "uMVP");
+    mvpLoc = glGetUniformLocation(shader->ID, "uMVP");
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_openglandroid_MainActivity_resizeEngine(JNIEnv*, jobject, jint width, jint height) {
+Java_com_example_openglandroid_MainActivity_resizeEngine(
+    JNIEnv*,
+    jobject,
+    jint width,
+    jint height) {
     surfaceW = width;
-    surfaceH = (height > 0 ? height : 1);
+    surfaceH = height > 0 ? height : 1;
     glViewport(0, 0, surfaceW, surfaceH);
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_openglandroid_MainActivity_renderEngine(JNIEnv*, jobject) {
+Java_com_example_openglandroid_MainActivity_renderEngine(
+    JNIEnv*,
+    jobject) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glUseProgram(program);
+    shader->use();
 
-    // Build projection
-    float proj[16];
-    makeProjection(proj);
-    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, proj);
+    angle += 0.01f;
+    glm::mat4 modelMat = glm::rotate(
+        glm::mat4(1.0f),
+        angle,
+        glm::vec3(0,1,0));
+    glm::mat4 view = glm::lookAt(
+        glm::vec3(0,0,6),
+        glm::vec3(0,0,0),
+        glm::vec3(0,1,0));
+    glm::mat4 proj = glm::perspective(
+        glm::radians(45.0f),
+        surfaceW / (float)surfaceH,
+        0.1f,
+        100.0f);
+    glm::mat4 mvp = proj * view * modelMat;
+    glUniformMatrix4fv(
+        mvpLoc,
+        1,
+        GL_FALSE,
+        &mvp[0][0]);
 
-    glBindVertexArray(vao);
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, nullptr);
-    glBindVertexArray(0);
+    model->Draw(*shader);
 }
