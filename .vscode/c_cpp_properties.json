@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "Android NDK",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${env:ANDROID_NDK_HOME}/sources/android/native_app_glue",
+        "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include",
+        "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/android",
+        "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/arm-linux-androideabi" // or x86_64, depending
+      ],
+      "defines": [],
+      "compilerPath": "${env:ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-clang-x64"
+    }
+  ],
+  "version": 4
+}

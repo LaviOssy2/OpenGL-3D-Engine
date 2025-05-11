@@ -1,0 +1,1 @@
+E:\MyProjects\Cross-Platform\OpenGLAndroid\app\build\intermediates\cxx\Debug\62213o5t\obj\arm64-v8a
