@@ -1,6 +1,11 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
     "files.associations": {
-        "vector": "cpp"
+        "vector": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "deque": "cpp",
+        "__split_buffer": "cpp",
+        "list": "cpp"
     }
 }
