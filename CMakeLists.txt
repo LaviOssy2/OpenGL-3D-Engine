@@ -14,20 +14,19 @@ endif()
 add_library(native-lib SHARED
     app/src/main/cpp/native-lib.cpp
     app/src/main/cpp/model/obj_loader.cpp
-    app/src/main/cpp/renderer/model.cpp
+    app/src/main/cpp/model/model.cpp
     app/src/main/cpp/renderer/mesh.cpp
-    app/src/main/cpp/renderer/renderer.cpp
-    app/src/main/cpp/utils/asset_loader.h
+    app/src/main/cpp/renderer/shader.cpp
 )
 
 # 4) Your normal include dirs
 target_include_directories(native-lib PRIVATE
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp
+    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/external
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/model
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/renderer
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/utils
-    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core
 )
 
 # 5) Find & link Android libs

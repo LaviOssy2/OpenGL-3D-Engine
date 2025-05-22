@@ -11,12 +11,15 @@
 #include <glm/glm.hpp>
 #include "vertex.h"
 
+struct RawMesh {
+    std::vector<Vertex> vertices;
+    std::vector<unsigned int> indices;
+};
 
 // load .obj from AssetManager into a flat
 // vertex array + index list
-bool loadOBJ(const std::string&    path,
-             AAssetManager*        mgr,
-             std::vector<Vertex>&       outVertices,
-             std::vector<unsigned int>& outIndices);
+bool loadOBJ(const std::string& path,
+             AAssetManager* mgr,
+             std::vector<RawMesh>& outMeshes);
              
 #endif // OBJ_LOADER_H

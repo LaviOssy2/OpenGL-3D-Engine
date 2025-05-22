@@ -3,7 +3,7 @@
 #include <GLES3/gl3.h>
 #include <android/asset_manager.h>
 #include "mesh.h"                // Include your Mesh class
-#include "model/obj_loader.h"    // Still needed for loading geometry
+#include "obj_loader.h"    // Still needed for loading geometry
 #include "shader.h"
 
 class Model {
@@ -14,7 +14,7 @@ public:
     void Draw(Shader& shader, int w, int h);
 
 private:
-    std::vector<Mesh> meshes;   // ✅ Use Mesh to hold geometry
+    std::vector<Mesh> meshes;   // Use Mesh to hold geometry
 };
 
 #endif // MODEL_H

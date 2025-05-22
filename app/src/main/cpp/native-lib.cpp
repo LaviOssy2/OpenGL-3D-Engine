@@ -5,8 +5,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
 
-#include "renderer/shader.h"
-#include "renderer/model.h"
+#include "shader.h"
+#include "model.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ Java_com_example_openglandroid_MainActivity_initEngine(
         "shader/ModelShader.fs",
         mgr
     );
-    model = make_unique<Model>("models/cube.obj", mgr);
+    model = make_unique<Model>("models/2meshexp.obj", mgr);
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glEnable(GL_DEPTH_TEST);
@@ -64,6 +64,10 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     shader->setMat4("model",      M);
     shader->setMat4("view",       V);
     shader->setMat4("projection", P);
+shader->setVec3("lightDir", glm::normalize(glm::vec3(0.0f, -1.0f, 0.0f))); // light from +Y downward
+shader->setVec3("lightColor", glm::vec3(1.0f)); // white sunlight
+shader->setVec4("color", glm::vec4(1.0f)); // white object color (for now)
+
 
     model->Draw(*shader, surfaceW, surfaceH);
 }

@@ -53,7 +53,7 @@ build CMakeFiles/native-lib.dir/app/src/main/cpp/native-lib.cpp.o: CXX_COMPILER_
   DEFINES = -Dnative_lib_EXPORTS
   DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\native-lib.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC
-  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core
+  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils
   OBJECT_DIR = CMakeFiles\native-lib.dir
   OBJECT_FILE_DIR = CMakeFiles\native-lib.dir\app\src\main\cpp
 
@@ -61,31 +61,31 @@ build CMakeFiles/native-lib.dir/app/src/main/cpp/model/obj_loader.cpp.o: CXX_COM
   DEFINES = -Dnative_lib_EXPORTS
   DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\model\obj_loader.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC
-  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core
+  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils
   OBJECT_DIR = CMakeFiles\native-lib.dir
   OBJECT_FILE_DIR = CMakeFiles\native-lib.dir\app\src\main\cpp\model
 
-build CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/model.cpp.o: CXX_COMPILER__native-lib_Debug E$:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer/model.cpp || cmake_object_order_depends_target_native-lib
+build CMakeFiles/native-lib.dir/app/src/main/cpp/model/model.cpp.o: CXX_COMPILER__native-lib_Debug E$:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model/model.cpp || cmake_object_order_depends_target_native-lib
   DEFINES = -Dnative_lib_EXPORTS
-  DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\renderer\model.cpp.o.d
+  DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\model\model.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC
-  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core
+  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils
   OBJECT_DIR = CMakeFiles\native-lib.dir
-  OBJECT_FILE_DIR = CMakeFiles\native-lib.dir\app\src\main\cpp\renderer
+  OBJECT_FILE_DIR = CMakeFiles\native-lib.dir\app\src\main\cpp\model
 
 build CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/mesh.cpp.o: CXX_COMPILER__native-lib_Debug E$:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer/mesh.cpp || cmake_object_order_depends_target_native-lib
   DEFINES = -Dnative_lib_EXPORTS
   DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\renderer\mesh.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC
-  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core
+  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils
   OBJECT_DIR = CMakeFiles\native-lib.dir
   OBJECT_FILE_DIR = CMakeFiles\native-lib.dir\app\src\main\cpp\renderer
 
-build CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/renderer.cpp.o: CXX_COMPILER__native-lib_Debug E$:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer/renderer.cpp || cmake_object_order_depends_target_native-lib
+build CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/shader.cpp.o: CXX_COMPILER__native-lib_Debug E$:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer/shader.cpp || cmake_object_order_depends_target_native-lib
   DEFINES = -Dnative_lib_EXPORTS
-  DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\renderer\renderer.cpp.o.d
+  DEP_FILE = CMakeFiles\native-lib.dir\app\src\main\cpp\renderer\shader.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC
-  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core
+  INCLUDES = -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/core -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/external -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/model -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/renderer -IE:/MyProjects/Cross-Platform/OpenGLAndroid/app/src/main/cpp/utils
   OBJECT_DIR = CMakeFiles\native-lib.dir
   OBJECT_FILE_DIR = CMakeFiles\native-lib.dir\app\src\main\cpp\renderer
 
@@ -97,7 +97,7 @@ build CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/renderer.cpp.o: CXX_CO
 #############################################
 # Link the shared library ..\..\..\..\build\intermediates\cxx\Debug\62213o5t\obj\arm64-v8a\libnative-lib.so
 
-build ../../../../build/intermediates/cxx/Debug/62213o5t/obj/arm64-v8a/libnative-lib.so: CXX_SHARED_LIBRARY_LINKER__native-lib_Debug CMakeFiles/native-lib.dir/app/src/main/cpp/native-lib.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/model/obj_loader.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/model.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/mesh.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/renderer.cpp.o | C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/liblog.so C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libandroid.so C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libEGL.so C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libGLESv3.so
+build ../../../../build/intermediates/cxx/Debug/62213o5t/obj/arm64-v8a/libnative-lib.so: CXX_SHARED_LIBRARY_LINKER__native-lib_Debug CMakeFiles/native-lib.dir/app/src/main/cpp/native-lib.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/model/obj_loader.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/model/model.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/mesh.cpp.o CMakeFiles/native-lib.dir/app/src/main/cpp/renderer/shader.cpp.o | C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/liblog.so C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libandroid.so C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libEGL.so C$:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libGLESv3.so
   LANGUAGE_COMPILE_FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info
   LINK_FLAGS = -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Wl,--gc-sections -Wl,--no-undefined -Qunused-arguments
   LINK_LIBRARIES = C:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/liblog.so  C:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libandroid.so  C:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libEGL.so  C:/Users/lavio/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/24/libGLESv3.so  -latomic -lm

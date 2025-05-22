@@ -1,45 +1,50 @@
-#include "model/obj_loader.h"
+#include "obj_loader.h"
 
-bool loadOBJ(const std::string&    path,
-             AAssetManager*        mgr,
-             std::vector<Vertex>&       outV,
-             std::vector<unsigned int>& outI)
+bool loadOBJ(const std::string& path,
+             AAssetManager* mgr,
+             std::vector<RawMesh>& outMeshes)
 {
-    outV.clear();
-    outI.clear();
+    outMeshes.clear();
 
     AAsset* asset = AAssetManager_open(mgr, path.c_str(), AASSET_MODE_BUFFER);
     if (!asset) {
         __android_log_print(ANDROID_LOG_ERROR, "OBJ", "cannot open %s", path.c_str());
         return false;
     }
+
     size_t len = AAsset_getLength(asset);
     std::string data(len, '\0');
     AAsset_read(asset, &data[0], len);
     AAsset_close(asset);
 
     std::istringstream file(data);
-    std::vector<glm::vec3> pos;
+    std::vector<glm::vec3> pos, nm;
     std::vector<glm::vec2> uv;
-    std::vector<glm::vec3> nm;
 
+    RawMesh currentMesh;
     std::string line;
+
     while (std::getline(file, line)) {
         std::istringstream ss(line);
-        std::string tag; ss >> tag;
-        if (tag == "v") {
+        std::string tag;
+        ss >> tag;
+
+        if (tag == "o") {
+            // Save the current mesh if it has data
+            if (!currentMesh.vertices.empty()) {
+                outMeshes.push_back(currentMesh);
+                currentMesh = RawMesh(); // Start new mesh
+            }
+        } else if (tag == "v") {
             glm::vec3 p; ss >> p.x >> p.y >> p.z;
             pos.push_back(p);
-        }
-        else if (tag == "vt") {
+        } else if (tag == "vt") {
             glm::vec2 t; ss >> t.x >> t.y;
             uv.push_back(t);
-        }
-        else if (tag == "vn") {
+        } else if (tag == "vn") {
             glm::vec3 n; ss >> n.x >> n.y >> n.z;
             nm.push_back(n);
-        }
-        else if (tag == "f") {
+        } else if (tag == "f") {
             std::vector<Vertex> faceVerts;
             std::string tok;
 
@@ -53,19 +58,22 @@ bool loadOBJ(const std::string&    path,
                 faceVerts.push_back(vtx);
             }
 
-            // Triangulate polygon (fan method)
             for (size_t i = 1; i + 1 < faceVerts.size(); ++i) {
-                outV.push_back(faceVerts[0]);
-                outV.push_back(faceVerts[i]);
-                outV.push_back(faceVerts[i + 1]);
+                currentMesh.vertices.push_back(faceVerts[0]);
+                currentMesh.vertices.push_back(faceVerts[i]);
+                currentMesh.vertices.push_back(faceVerts[i + 1]);
 
-                outI.push_back((unsigned int)outV.size() - 3);
-                outI.push_back((unsigned int)outV.size() - 2);
-                outI.push_back((unsigned int)outV.size() - 1);
+                currentMesh.indices.push_back((unsigned int)currentMesh.vertices.size() - 3);
+                currentMesh.indices.push_back((unsigned int)currentMesh.vertices.size() - 2);
+                currentMesh.indices.push_back((unsigned int)currentMesh.vertices.size() - 1);
             }
         }
-
     }
 
+    // Push last mesh
+    if (!currentMesh.vertices.empty()) {
+        outMeshes.push_back(currentMesh);
+    }
+    
     return true;
 }
