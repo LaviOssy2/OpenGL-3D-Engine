@@ -7,9 +7,13 @@
 
 #include "shader.h"
 #include "model.h"
+#include "point_light.h"
+#include "directional_light.h"
+#include "spot_light.h"
 
 using namespace std;
 
+static std::unique_ptr<Light> light;
 static unique_ptr<Shader> shader;
 static unique_ptr<Model>  model;
 static int   surfaceW = 0, surfaceH = 1;
@@ -27,6 +31,17 @@ Java_com_example_openglandroid_MainActivity_initEngine(
     );
     model = make_unique<Model>("models/2meshexp.obj", mgr);
 
+    // light = std::make_unique<PointLight>(
+    //     glm::vec3(1.0f, 3.0f, 2.0f), // Position above scene
+    //     glm::vec3(1.0f, 1.0f, 1.0f)  // White light
+    // );
+    //light = std::make_unique<DirectionalLight>(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(1.0f));
+    light = std::make_unique<PointLight>(glm::vec3(1.0f,  3.0f,  2.0f), glm::vec3(1.0f));
+    // light = std::make_unique<SpotLight>(glm::vec3(0.0f,  4.0f,  0.0f),
+    //                                      glm::vec3(0.0f, -1.0f,  0.0f),
+    //                                      cos(glm::radians(12.5f)),
+    //                                      cos(glm::radians(15.0f)),
+    //                                      glm::vec3(1.0f));
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glEnable(GL_DEPTH_TEST);
 }
@@ -64,10 +79,9 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     shader->setMat4("model",      M);
     shader->setMat4("view",       V);
     shader->setMat4("projection", P);
-shader->setVec3("lightDir", glm::normalize(glm::vec3(0.0f, -1.0f, 0.0f))); // light from +Y downward
-shader->setVec3("lightColor", glm::vec3(1.0f)); // white sunlight
-shader->setVec4("color", glm::vec4(1.0f)); // white object color (for now)
-
-
+    
+    light->apply(*shader, 0);
+    shader->setInt("numPointLights", 1); // or the size of your light list
+    shader->setInt("numSpotLights", 0); // or the size of your light list
     model->Draw(*shader, surfaceW, surfaceH);
 }
