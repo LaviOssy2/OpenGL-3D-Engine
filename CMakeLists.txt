@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10.2)
 project("OpenGLAndroid")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 # 1) Figure out your NDK host tag
 if(CMAKE_HOST_SYSTEM_NAME MATCHES "Windows")
@@ -12,7 +15,7 @@ endif()
 
 # 2) Declare the native-lib target
 add_library(native-lib SHARED
-    app/src/main/cpp/scene/native-lib.cpp
+    app/src/main/cpp/native-lib.cpp
     app/src/main/cpp/model/obj_loader.cpp
     app/src/main/cpp/model/model.cpp
     app/src/main/cpp/renderer/mesh.cpp
@@ -26,7 +29,6 @@ add_library(native-lib SHARED
 # 4) Your normal include dirs
 target_include_directories(native-lib PRIVATE
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp
-    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/graphics
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/scene/entities
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/scene/lights
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/utils
