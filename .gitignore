@@ -3,3 +3,14 @@
 
 # Ignore Gradle build output directory
 build
+# Ignore build artifacts and generated files
+app/.cxx/
+app/build/
+app/.gradle/
+app/.externalNativeBuild/
+.gradle/
+build/
+*.o
+*.so
+*.apk
+*.log

@@ -30,9 +30,7 @@ struct SpotLight {
 
 uniform DirectionalLight dirLight;
 uniform PointLight      pointLights[MAX_POINT_LIGHTS];
-uniform int             numPointLights;
 uniform SpotLight       spotLights[MAX_SPOT_LIGHTS];
-uniform int             numSpotLights;
 
 in vec3 FragPos;
 in vec3 Normal;
@@ -53,11 +51,11 @@ void main() {
     result += CalcDirLight(dirLight, norm);
 
     // Point lights
-    for (int i = 0; i < numPointLights; ++i)
+    for (int i = 0; i < pointLights.length(); ++i)
         result += CalcPointLight(pointLights[i], norm, FragPos);
 
     // Spot lights
-    for (int i = 0; i < numSpotLights; ++i)
+    for (int i = 0; i < spotLights.length(); ++i)
         result += CalcSpotLight(spotLights[i], norm, FragPos);
 
     FragColor = vec4(result, 1.0);

@@ -54,9 +54,6 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     shader->setMat4("view", V);
     shader->setMat4("projection", P);
 
-    shader->setInt("numPointLights", 1);
-    shader->setInt("numSpotLights", 0);
-
     // Apply light properties
     sunLight->getComponent<LightComponent>()->light->apply(*shader, 0);
 
