@@ -15,10 +15,72 @@ static std::unique_ptr<SunLight> sunLight;
 static int surfaceW = 0, surfaceH = 1;
 static float angle = 0.0f;
 
+#define LOG_TAG "TouchGL"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+
+// globals:
+static JavaVM*  gJavaVM   = nullptr;
+static jobject  gActivity = nullptr;
+
+// 1) Grab the VM when the lib loads:
+jint JNI_OnLoad(JavaVM* vm, void* /*reserved*/) {
+    gJavaVM = vm;
+    return JNI_VERSION_1_6;
+}
+
+// helper to call MainActivity.showDebug(...)
+static void showFingerPosCpp(jint idx, jfloat x, jfloat y) {
+    // 1) Get a JNIEnv on this thread
+    JNIEnv* env = nullptr;
+    gJavaVM->AttachCurrentThread(&env, nullptr);
+
+    // 2) Find your Activity’s class
+    jclass cls = env->GetObjectClass(gActivity);
+
+    // 3) Look up the showFingerPos(int, float, float) method
+    //    I   → int
+    //    F   → float
+    //    F   → float
+    //    V   → void
+    jmethodID mid = env->GetMethodID(cls, "showFingerPos", "(IFF)V");
+
+    // 4) Call it with your C++ values
+    env->CallVoidMethod(
+        gActivity,
+        mid,
+        idx,
+        x,
+        y
+    );
+
+    // 5) Clean up the local ref to the class
+    env->DeleteLocalRef(cls);
+
+    // (Optionally, if you won’t make more JNI calls soon)
+    // gJavaVM->DetachCurrentThread();
+}
+
+
+// … your other JNI methods …
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_example_openglandroid_TouchGLSurfaceView_nativeOnTouch(
+    JNIEnv* env, jobject /*self*/,
+    jint action, jint pointerIndex,
+    jint pointerId, jfloat x, jfloat y, jint fingerCount)
+{
+    // now you can build any debug message you want:
+    showFingerPosCpp(pointerId, x, y);
+
+    // … plus whatever other native logic you do …
+}
+
 extern "C" JNIEXPORT void JNICALL
 Java_com_example_openglandroid_MainActivity_initEngine(
-    JNIEnv* env, jobject /* this */, jobject assetManager)
+    JNIEnv* env, jobject activity, jobject assetManager)
 {
+    gActivity = env->NewGlobalRef(activity);
+
     AAssetManager* mgr = AAssetManager_fromJava(env, assetManager);
     shader = std::make_unique<Shader>("shader/ModelShader.vs", "shader/ModelShader.fs", mgr);
 
