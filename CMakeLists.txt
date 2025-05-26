@@ -16,6 +16,7 @@ endif()
 # 2) Declare the native-lib target
 add_library(native-lib SHARED
     app/src/main/cpp/native-lib.cpp
+    app/src/main/cpp/input/touch_input.cpp
     app/src/main/cpp/model/obj_loader.cpp
     app/src/main/cpp/model/model.cpp
     app/src/main/cpp/renderer/mesh.cpp
@@ -23,6 +24,8 @@ add_library(native-lib SHARED
     app/src/main/cpp/core/scene/lights/point_light.cpp
     app/src/main/cpp/core/scene/lights/directional_light.cpp
     app/src/main/cpp/core/scene/lights/spot_light.cpp
+    app/src/main/cpp/renderer/texture_utils.cpp
+
 
 )
 
@@ -35,6 +38,7 @@ target_include_directories(native-lib PRIVATE
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/external
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/model
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/renderer
+    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/input
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/scene
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/utils
 )
