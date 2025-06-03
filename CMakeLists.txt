@@ -16,15 +16,23 @@ endif()
 # 2) Declare the native-lib target
 add_library(native-lib SHARED
     app/src/main/cpp/native-lib.cpp
+
     app/src/main/cpp/input/touch_input.cpp
-    app/src/main/cpp/model/obj_loader.cpp
-    app/src/main/cpp/model/model.cpp
-    app/src/main/cpp/renderer/mesh.cpp
+
+    app/src/main/cpp/3D_object/mesh.cpp
+    app/src/main/cpp/3D_object/model.cpp
+    app/src/main/cpp/3D_object/obj_loader.cpp
+
+    app/src/main/cpp/2D_object/img_loader.cpp
+    app/src/main/cpp/2D_object/sprite.cpp
+    app/src/main/cpp/2D_object/image.cpp
+
     app/src/main/cpp/renderer/shader.cpp
+    
     app/src/main/cpp/core/scene/lights/point_light.cpp
     app/src/main/cpp/core/scene/lights/directional_light.cpp
     app/src/main/cpp/core/scene/lights/spot_light.cpp
-    app/src/main/cpp/renderer/texture_utils.cpp
+    
 
 
 )
@@ -37,7 +45,8 @@ target_include_directories(native-lib PRIVATE
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/scene
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/utils
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/external
-    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/model
+    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/3D_object
+    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/2D_object
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/renderer
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/input
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/scene

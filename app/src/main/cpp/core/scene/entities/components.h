@@ -11,6 +11,8 @@
 #include "directional_light.h"
 #include "point_light.h"
 #include "spot_light.h"
+#include "sprite.h"  // Make sure this includes Image and loader logic
+
 
 struct Component {
     virtual ~Component() = default; // Virtual destructor
@@ -34,5 +36,15 @@ struct LightComponent : Component {
         : light(std::move(lightPtr)) {}
 
 };
+
+struct SpriteComponent : Component {
+    std::unique_ptr<Sprite> sprite;
+
+    SpriteComponent(const char* path, AAssetManager* mgr)
+        : sprite(std::make_unique<Sprite>(path, mgr)) {}
+    ~SpriteComponent() override = default;
+};
+
+
 
 #endif // COMPONENTS_H

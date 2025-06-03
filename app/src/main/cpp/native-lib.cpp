@@ -9,7 +9,8 @@
 #include "player.h"
 #include "sunlight.h"
 #include "touch_input.h"
-#include "texture_utils.h"
+#include "img_loader.h"
+#include "joystick.h"
 
 static std::unique_ptr<Shader> shader;               // your 3D model shader
 static std::unique_ptr<Shader> joystick_shader;      // new joystick shader
@@ -21,6 +22,8 @@ static glm::mat4 orthoProj;
 
 static std::unique_ptr<Player> player;
 static std::unique_ptr<SunLight> sunLight;
+static std::unique_ptr<Joystick> joystick;
+
 static int surfaceW = 0, surfaceH = 1;
 static float angle = 0.0f;
 
@@ -99,7 +102,6 @@ Java_com_example_openglandroid_MainActivity_initEngine(
 
     // -----------------
     // Load joystick shader
-    joystickTexID = LoadTextureFromAsset(mgr, "images/joystick.png");
 
     // 2) compile the 2D textured-quad shader
     joystick_shader = std::make_unique<Shader>(
@@ -107,6 +109,8 @@ Java_com_example_openglandroid_MainActivity_initEngine(
         "shader/joystick_shader.fs",
         mgr
     );
+    joystick = std::make_unique<Joystick>(mgr);
+
 
     // 3) build a screen-space quad (two triangles)
     float quadVertices[] = {
@@ -157,7 +161,6 @@ Java_com_example_openglandroid_MainActivity_resizeEngine(
     );
 }
 
-
 extern "C" JNIEXPORT void JNICALL
 Java_com_example_openglandroid_MainActivity_renderEngine(
     JNIEnv* /*env*/, jobject /*this*/)
@@ -178,45 +181,9 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     
     player->update();
     player->draw(*shader);
+    // Before drawing:
+    joystick->update();
 
-    // 3) Now draw your joystick on top
-    auto touch0 = Input::GetTouch(0);
-    if ( touch0 && joystickTexID && joystick_shader ) {
-      // turn off depth-­test so it always draws over the 3D
-      glDisable(GL_DEPTH_TEST);
-      // (optionally also glDepthMask(GL_FALSE);)
-
-      // rebuild & upload VBO as before…
-      float cx = touch0->position.x,
-            cy = touch0->position.y,
-            half = JOY_SIZE*0.5f;
-      float x1 = cx-half, y1 = cy-half,
-            x2 = cx+half, y2 = cy+half;
-      float quadVertices[] = {
-        x1,y1, 0,0,
-        x2,y1, 1,0,
-        x2,y2, 1,1,
-        x1,y1, 0,0,
-        x2,y2, 1,1,
-        x1,y2, 0,1
-      };
-      glBindBuffer(GL_ARRAY_BUFFER, joystickVBO);
-      glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quadVertices), quadVertices);
-      glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-      // draw the textured quad
-      joystick_shader->use();
-      joystick_shader->setMat4("uProjection", orthoProj);
-      glActiveTexture(GL_TEXTURE0);
-      glBindTexture(GL_TEXTURE_2D, joystickTexID);
-      joystick_shader->setInt("uTexture", 0);
-
-      glBindVertexArray(joystickVAO);
-      glDrawArrays(GL_TRIANGLES, 0, 6);
-      glBindVertexArray(0);
-
-      // re-enable depth test for next frame
-      glEnable(GL_DEPTH_TEST);
-      // (if you disabled depth writes: glDepthMask(GL_TRUE);)
-    }
+    // After 3D draw, replace the manual block with:
+    joystick->draw(*joystick_shader, orthoProj);
 }
