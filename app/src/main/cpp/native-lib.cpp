@@ -10,7 +10,7 @@
 #include "sunlight.h"
 #include "touch_input.h"
 #include "img_loader.h"
-#include "joystick.h"
+#include "left_background_stick.h"
 
 static std::unique_ptr<Shader> shader;               // your 3D model shader
 static std::unique_ptr<Shader> joystick_shader;      // new joystick shader
@@ -22,7 +22,7 @@ static glm::mat4 orthoProj;
 
 static std::unique_ptr<Player> player;
 static std::unique_ptr<SunLight> sunLight;
-static std::unique_ptr<Joystick> joystick;
+static std::unique_ptr<LeftBGStick> joystick;
 
 static int surfaceW = 0, surfaceH = 1;
 static float angle = 0.0f;
@@ -109,35 +109,7 @@ Java_com_example_openglandroid_MainActivity_initEngine(
         "shader/joystick_shader.fs",
         mgr
     );
-    joystick = std::make_unique<Joystick>(mgr);
-
-
-    // 3) build a screen-space quad (two triangles)
-    float quadVertices[] = {
-      // pos.x, pos.y,   u,   v
-      100, 100,       0, 0,
-      300, 100,       1, 0,
-      300, 300,       1, 1,
-
-      100, 100,       0, 0,
-      300, 300,       1, 1,
-      100, 300,       0, 1
-    };
-    glGenVertexArrays(1, &joystickVAO);
-    glGenBuffers(1, &joystickVBO);
-    glBindVertexArray(joystickVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, joystickVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
-    // pos attrib
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-    // uv attrib
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
-                          (void*)(2 * sizeof(float)));
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    // ——————————————————————————
+    joystick = std::make_unique<LeftBGStick>(mgr);
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glEnable(GL_DEPTH_TEST);
@@ -182,7 +154,7 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     player->update();
     player->draw(*shader);
     // Before drawing:
-    joystick->update();
+    joystick->update(surfaceW);
 
     // After 3D draw, replace the manual block with:
     joystick->draw(*joystick_shader, orthoProj);
