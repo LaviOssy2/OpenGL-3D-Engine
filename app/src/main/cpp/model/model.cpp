@@ -16,7 +16,7 @@ Model::Model(const std::string& path, AAssetManager* mgr) {
     }
 }
 
-void Model::Draw(Shader& shader, int w, int h) {
+void Model::Draw(Shader& shader) {
     shader.use();
     for (auto& mesh : meshes) {
         mesh.Draw(shader);

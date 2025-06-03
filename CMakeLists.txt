@@ -34,6 +34,7 @@ target_include_directories(native-lib PRIVATE
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/scene/entities
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/scene/lights
+    ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/scene
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/core/utils
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/external
     ${CMAKE_SOURCE_DIR}/app/src/main/cpp/model

@@ -11,7 +11,7 @@ public:
     Model(const std::string& path, AAssetManager* mgr);
     ~Model() = default;
 
-    void Draw(Shader& shader, int w, int h);
+    void Draw(Shader& shader);
 
 private:
     std::vector<Mesh> meshes;   // Use Mesh to hold geometry

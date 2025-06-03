@@ -9,11 +9,19 @@
 #include <stdexcept>
 
 #include "components.h"
+#include "shader.h"   // <-- we need Shader declared so draw(Shader&) compiles
 
 class SceneObject {
 public:
     SceneObject() = default;
-    ~SceneObject() = default;
+    virtual ~SceneObject() = default;
+
+    virtual void start() {}
+    virtual void update() {}
+    virtual void fixed_update() {}
+
+    // Changed: draw now takes a Shader& so each derived object can set its own model matrix
+    virtual void draw(Shader& /*shader*/) { }
 
     // Add a component of any type (using unique_ptr)
     template<typename T, typename... Args>
@@ -25,7 +33,7 @@ public:
         components[type] = std::make_unique<T>(std::forward<Args>(args)...);
     }
 
-    // Get a reference to a component of type T
+    // Get a pointer to a component of type T
     template<typename T>
     T* getComponent() {
         auto type = std::type_index(typeid(T));
@@ -35,13 +43,6 @@ public:
         }
         return nullptr; // Not found
     }
-
-    // Update all components
-    // void updateComponents() {
-    //     for (auto& [type, comp] : components) {
-    //         comp->update();
-    //     }
-    // }
 
 private:
     std::unordered_map<std::type_index, std::unique_ptr<Component>> components;

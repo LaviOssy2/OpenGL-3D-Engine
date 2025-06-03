@@ -7,6 +7,7 @@
 #include <memory>
 #include "model.h"
 #include "light.h"
+#include "transform.h"
 #include "directional_light.h"
 #include "point_light.h"
 #include "spot_light.h"
@@ -16,9 +17,8 @@ struct Component {
 };
 
 struct TransformComponent : Component {
-    glm::vec3 position;
-    glm::quat rotation;
-    glm::vec3 scale;
+    std::unique_ptr<Transform> transform; // Pointer to the Mesh object
+    TransformComponent() : transform(std::make_unique<Transform>()) {}
 };
 
 struct ModelComponent : Component {

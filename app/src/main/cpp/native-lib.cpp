@@ -166,20 +166,18 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // 2) Draw your 3D world
-    angle += 0.01f;
-    glm::mat4 M = glm::rotate(glm::mat4(1.0f), angle, {0,1,0});
     glm::mat4 V = glm::lookAt(glm::vec3(0,0,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
     glm::mat4 P = glm::perspective(glm::radians(45.0f),
                                    surfaceW/(float)surfaceH,
                                    0.1f, 100.0f);
     shader->use();
-    shader->setMat4("model",      M);
     shader->setMat4("view",       V);
     shader->setMat4("projection", P);
+
     sunLight->getComponent<LightComponent>()->light->apply(*shader, 0);
-    player->getComponent<ModelComponent>()->model->Draw(*shader,
-                                                        surfaceW,
-                                                        surfaceH);
+    
+    player->update();
+    player->draw(*shader);
 
     // 3) Now draw your joystick on top
     auto touch0 = Input::GetTouch(0);
