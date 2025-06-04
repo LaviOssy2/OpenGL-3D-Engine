@@ -35,7 +35,7 @@ public:
 
     // Get a pointer to a component of type T
     template<typename T>
-    T* getComponent() {
+    T* getComponent() const {
         auto type = std::type_index(typeid(T));
         auto it = components.find(type);
         if (it != components.end()) {

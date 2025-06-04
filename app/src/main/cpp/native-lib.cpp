@@ -7,10 +7,13 @@
 
 #include "shader.h"
 #include "player.h"
+#include "player2.h"
+
 #include "sunlight.h"
 #include "touch_input.h"
 #include "img_loader.h"
 #include "left_background_stick.h"
+#include "camera.h"
 
 static std::unique_ptr<Shader> shader;               // your 3D model shader
 static std::unique_ptr<Shader> joystick_shader;      // new joystick shader
@@ -21,8 +24,12 @@ static const float JOY_SIZE = 200.0f;      // width & height of your joystick im
 static glm::mat4 orthoProj;
 
 static std::unique_ptr<Player> player;
+static std::unique_ptr<Player2> player2;
+
 static std::unique_ptr<SunLight> sunLight;
 static std::unique_ptr<LeftBGStick> joystick;
+
+static std::unique_ptr<Camera> camera;
 
 static int surfaceW = 0, surfaceH = 1;
 static float angle = 0.0f;
@@ -99,7 +106,8 @@ Java_com_example_openglandroid_MainActivity_initEngine(
 
     player = std::make_unique<Player>(mgr);
     sunLight = std::make_unique<SunLight>();
-
+    player2 = std::make_unique<Player2>(mgr);
+    player2->start();
     // -----------------
     // Load joystick shader
 
@@ -110,6 +118,11 @@ Java_com_example_openglandroid_MainActivity_initEngine(
         mgr
     );
     joystick = std::make_unique<LeftBGStick>(mgr);
+
+    camera = std::make_unique<Camera>();
+    // Give it a projection matching the surface aspect ratio:
+    float aspect = surfaceW > 0 ? (surfaceW / (float)surfaceH) : 1.0f;
+    camera->setPerspective(45.0f, aspect, 0.1f, 100.0f);
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glEnable(GL_DEPTH_TEST);
@@ -125,6 +138,12 @@ Java_com_example_openglandroid_MainActivity_resizeEngine(
     surfaceW = w;
     surfaceH = h > 0 ? h : 1;
     glViewport(0, 0, surfaceW, surfaceH);
+
+    if (camera) {
+        float aspect = surfaceW / (float)surfaceH;
+        camera->setPerspective(45.0f, aspect, 0.1f, 100.0f);
+    }
+
     // new: update ortho for joystick quad
     orthoProj = glm::ortho(
       0.0f, float(surfaceW),
@@ -140,14 +159,11 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     // 1) Clear at the top of the frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // 2) Draw your 3D world
-    glm::mat4 V = glm::lookAt(glm::vec3(0,0,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
-    glm::mat4 P = glm::perspective(glm::radians(45.0f),
-                                   surfaceW/(float)surfaceH,
-                                   0.1f, 100.0f);
-    shader->use();
-    shader->setMat4("view",       V);
-    shader->setMat4("projection", P);
+    // 2) Let the camera update itself (e.g. apply rotation/translation)
+    if (camera) {
+        camera->update();
+        camera->draw(*shader);
+    }
 
     sunLight->getComponent<LightComponent>()->light->apply(*shader, 0);
     
@@ -155,6 +171,8 @@ Java_com_example_openglandroid_MainActivity_renderEngine(
     player->draw(*shader);
     // Before drawing:
     joystick->update(surfaceW);
+    player2->update();
+    player2->draw(*shader);
 
     // After 3D draw, replace the manual block with:
     joystick->draw(*joystick_shader, orthoProj);

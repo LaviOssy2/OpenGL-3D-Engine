@@ -26,8 +26,8 @@ public:
 
     // Called every frame by the engine
     void update() override {
-        getComponent<TransformComponent>()->transform.get()->rotateY(1.0f);
-        getComponent<TransformComponent>()->transform.get()->rotateX(1.0f);
+        //getComponent<TransformComponent>()->transform.get()->rotateY(1.0f);
+        //getComponent<TransformComponent>()->transform.get()->rotateX(1.0f);
 
     }
     
