@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Your custom GLSurfaceView -->
+    <com.example.openglandroid.TouchGLSurfaceView
+        android:id="@+id/glview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Overlay: finger count -->
+    <TextView
+        android:id="@+id/debugText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <!-- Overlay: finger 0 position -->
+    <TextView
+        android:id="@+id/finger0Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:padding="8dp"
+        android:textColor="#FF0"
+        android:textSize="14sp" />
+
+    <!-- Overlay: finger 1 position -->
+    <TextView
+        android:id="@+id/finger1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:padding="8dp"
+        android:textColor="#0F0"
+        android:textSize="14sp" />
+</FrameLayout>
