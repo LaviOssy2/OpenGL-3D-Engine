@@ -12,16 +12,17 @@
 *.pdb
 *.ilk
 *.log
-*.obj
+x64/**/*.obj
+x86/**/*.obj
 *.cache
 *.dll.recipe
 *.lastbuildstate
 
 # Ignore Debug/Release builds
-x64/Debug/
-x64/Release/
-x86/Debug/
-x86/Release/
+**/x64/
+**/x86/
+**/Debug/
+**/Release/
 
 # Ignore CMake build folder
 CMakeFiles/
