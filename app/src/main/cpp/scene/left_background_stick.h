@@ -1,5 +1,5 @@
-#ifndef JOYSTICK_H
-#define JOYSTICK_H
+#ifndef LEFT_BACKGROUND_STICK_H
+#define LEFT_BACKGROUND_STICK_H
 
 #include <memory>
 #include <android/asset_manager.h>
@@ -14,11 +14,19 @@ public:
         : assignedFingerId(-1), touched(false)
     {
         addComponent<TransformComponent>();
-        addComponent<SpriteComponent>("images/joystick.png", mgr);
+        addComponent<SpriteComponent>("images/circle.png", mgr);
+
     }
 
-    /// Call once per frame, passing in the current screen width (in pixels).
-    void update(int screenW) {
+    int getAssignedFingerId() const { return assignedFingerId; }
+    bool isTouched() const { return touched; }
+    glm::vec2 getPosition() const {
+        return glm::vec2(getComponent<TransformComponent>()->transform->position);
+    }
+
+
+    /// Call once per frame
+    void update() override {
         // If a finger is already assigned, check whether it’s still down:
         if (assignedFingerId != -1) {
             bool stillHere = false;
@@ -43,8 +51,8 @@ public:
             auto opt = Input::GetTouch(i);
             if (!opt) continue;
             glm::vec2 p = opt->position;
-            if (p.x <= (screenW * 0.5f)) {
-                // This is the first frame of a left‐side touch → “place” the background exactly once:
+            if (p.x <= (surfaceW * 0.5f)) {
+                // First frame of a left-side touch → place the background:
                 assignedFingerId = opt->pointerId;
                 touched = true;
                 getComponent<TransformComponent>()->transform->setPosition(glm::vec3(p, 0.0f));
@@ -53,26 +61,30 @@ public:
         }
     }
 
-    void draw(Shader& shader, const glm::mat4& orthoProj) {
+    void draw() override {
         if (!touched) return;
 
-        shader.use();
-        shader.setMat4("uProjection", orthoProj);
+        (*joystick_shader).use();
+        (*joystick_shader).setMat4("uProjection", orthoProj);
 
-        // Model matrix from TransformComponent
+        // Model matrix from TransformComponent (scale background slightly larger e.g. 0.6)
         glm::mat4 model = getComponent<TransformComponent>()->transform->getModelMatrix();
-        model = glm::scale(model, glm::vec3(0.5f));  // Apply additional scaling
+        model = glm::scale(model, glm::vec3(0.6f));
 
-        shader.setMat4("uModel", model);
+        (*joystick_shader).setMat4("uModel", model);
+
+        // Light & semi-transparent color tint for background
+        (*joystick_shader).setVec4("uColor", glm::vec4(1.0f, 1.0f, 1.0f, 0.45f));
 
         // Draw the sprite
-        getComponent<SpriteComponent>()->sprite->draw(shader);
+        getComponent<SpriteComponent>()->sprite->draw((*joystick_shader));
     }
 
 private:
     static constexpr int maxTouchPoints = 10;
-    int  assignedFingerId;   // –1 if no finger currently driving this stick
+    int  assignedFingerId;   // -1 if no finger currently driving this stick
     bool touched;
 };
 
-#endif // JOYSTICK_H
+#endif // LEFT_BACKGROUND_STICK_H
+

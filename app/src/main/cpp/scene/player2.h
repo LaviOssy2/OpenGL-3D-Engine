@@ -13,8 +13,8 @@ public:
         // 1) Add a TransformComponent and initialize default values
         addComponent<TransformComponent>();
 
-        // 2) Add a ModelComponent (load the mesh)
-        addComponent<ModelComponent>("models/2meshexp.obj", mgr);
+        // 2) Add a ModelComponent (load simple cube mesh)
+        addComponent<ModelComponent>("models/cube.obj", mgr);
     }
 
     virtual ~Player2() override = default;
@@ -23,7 +23,7 @@ public:
     void start() override {
         // e.g. any startup logic for Player
         getComponent<TransformComponent>()->transform.get()->setScale(glm::vec3(4.f, 0.3f, 4.f));
-        getComponent<TransformComponent>()->transform.get()->setPosition(glm::vec3(0.f, 0.f, 4.f));
+        //getComponent<TransformComponent>()->transform.get()->setPosition(glm::vec3(0.f, 0.f, 0.f));
 
     }
 
@@ -40,12 +40,15 @@ public:
     }
 
     // draw now takes a Shader&, so it can set its own model matrix before drawing its mesh:
-    void draw(Shader& shader) override {
+    void draw() override {
+        if (shader) {
+            shader->use();
+        }
         // 2) Upload to the shader
-        shader.setMat4("model", getComponent<TransformComponent>()->transform.get()->getModelMatrix());
+        (*shader).setMat4("model", getComponent<TransformComponent>()->transform.get()->getModelMatrix());
 
         // 3) Draw the mesh
-        getComponent<ModelComponent>()->model->Draw(shader);
+        getComponent<ModelComponent>()->model->Draw((*shader));
     }
 
 private:

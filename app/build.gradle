@@ -35,7 +35,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            path "E:/MyProjects/Cross-Platform/OpenGLAndroid/CMakeLists.txt"  // adjust if yours is elsewhere
+            path "../CMakeLists.txt"
         }
     }
 

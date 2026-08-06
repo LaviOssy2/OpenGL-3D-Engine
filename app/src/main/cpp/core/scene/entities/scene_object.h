@@ -21,7 +21,7 @@ public:
     virtual void fixed_update() {}
 
     // Changed: draw now takes a Shader& so each derived object can set its own model matrix
-    virtual void draw(Shader& /*shader*/) { }
+    virtual void draw() { }
 
     // Add a component of any type (using unique_ptr)
     template<typename T, typename... Args>

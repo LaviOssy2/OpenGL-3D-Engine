@@ -6,10 +6,14 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "left_front_stick.h"
+
 class Player : public SceneObject {
 public:
-    // Pass in the Android AssetManager so ModelComponent can load the .obj
-    Player(AAssetManager* mgr) {
+    // Pass in AssetManager and optional stick pointer for movement
+    Player(AAssetManager* mgr, LeftFrontStick* stick = nullptr)
+        : m_stick(stick)
+    {
         // 1) Add a TransformComponent and initialize default values
         addComponent<TransformComponent>();
 
@@ -19,34 +23,45 @@ public:
 
     virtual ~Player() override = default;
 
+    void setStick(LeftFrontStick* stick) { m_stick = stick; }
+
     // (Optional) If you have logic you need to run once:
     void start() override {
-        // e.g. any startup logic for Player
+        getComponent<TransformComponent>()->transform.get()->setPosition(glm::vec3(0.f, 4.f, 0.f));
     }
 
     // Called every frame by the engine
     void update() override {
-        //getComponent<TransformComponent>()->transform.get()->rotateY(1.0f);
-        //getComponent<TransformComponent>()->transform.get()->rotateX(1.0f);
-
+        if (m_stick) {
+            glm::vec2 input = m_stick->getInputValue();
+            if (glm::length(input) > 0.001f) {
+                float moveSpeed = 0.15f;
+                // input.x: left/right, input.y: forward/backward
+                glm::vec3 moveDir(input.x * moveSpeed, 0.0f, input.y * moveSpeed);
+                getComponent<TransformComponent>()->transform->translate(moveDir);
+            }
+        }
     }
-    
 
     void fixed_update() override {
         // physics or fixed‐timestep logic (if needed)
     }
 
     // draw now takes a Shader&, so it can set its own model matrix before drawing its mesh:
-    void draw(Shader& shader) override {
+    void draw() override {
+        if (shader) {
+            shader->use();
+        }
         // 2) Upload to the shader
-        shader.setMat4("model", getComponent<TransformComponent>()->transform.get()->getModelMatrix());
+        (*shader).setMat4("model", getComponent<TransformComponent>()->transform.get()->getModelMatrix());
 
         // 3) Draw the mesh
-        getComponent<ModelComponent>()->model->Draw(shader);
+        getComponent<ModelComponent>()->model->Draw((*shader));
     }
 
 private:
-    // (No need for a local AAssetManager* member—ModelComponent holds it internally)
+    LeftFrontStick* m_stick;
 };
 
 #endif // PLAYER_H
+

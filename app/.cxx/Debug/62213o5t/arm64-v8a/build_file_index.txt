@@ -1,1 +1,0 @@
-E:\MyProjects\Cross-Platform\OpenGLAndroid\CMakeLists.txt

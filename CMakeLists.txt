@@ -16,6 +16,7 @@ endif()
 # 2) Declare the native-lib target
 add_library(native-lib SHARED
     app/src/main/cpp/native-lib.cpp
+    app/src/main/cpp/globals.cpp
 
     app/src/main/cpp/input/touch_input.cpp
 

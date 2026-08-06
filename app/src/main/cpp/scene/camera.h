@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "globals.h"            // brings in extern shader, surfaceW, etc.
 #include "scene_object.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -10,28 +11,32 @@
 // When drawing, the engine will grab camera->Transform to build the view matrix.
 class Camera : public SceneObject {
 public:
-    Camera() {
+    Camera(bool applyDefaultStartTransform = true) : applyDefaultStartTransform(applyDefaultStartTransform) {
         // Add a TransformComponent so this SceneObject has a position/orientation/scale
         addComponent<TransformComponent>();
 
-        // Optional: set an initial position (e.g. 0,0,6) so you're not inside the origin.
-        getComponent<TransformComponent>()->transform.get()->setPosition({ 0.0f, 1.0f, 5.0f });
-        //getComponent<TransformComponent>()->transform.get()->rotateX(-70.f);
-
+        getComponent<TransformComponent>()->transform.get()->setPosition({ 0.0f, 0.0f, 0.0f });
     }
 
     virtual ~Camera() override = default;
 
-    // Called once at start (not strictly needed here)
+    // Called once at start
     void start() override {
-        // e.g. you could lock mouse, set initial yaw/pitch, etc.
+        if (applyDefaultStartTransform) {
+            getComponent<TransformComponent>()->transform.get()->setPosition({ 0.0f, 1.0f, 5.0f });
+            getComponent<TransformComponent>()->transform.get()->translate( {0.0f, 10.0f, 15.0f} );
+            getComponent<TransformComponent>()->transform.get()->rotateX(-30.f);
+        } else {
+            getComponent<TransformComponent>()->transform.get()->setPosition({ 0.0f, 0.0f, 0.0f });
+            getComponent<TransformComponent>()->transform.get()->setRotationEuler(0.0f, 0.0f, 0.0f);
+        }
     }
 
     // Each frame, you might allow user input to rotate the camera.
     void update() override {
         // Example: slowly spin the camera around the Y axis
         // (For a free‐look camera, you'd read input and pitch/yaw accordingly)
-        getComponent<TransformComponent>()->transform.get()->rotateY(0.5f);
+        //getComponent<TransformComponent>()->transform.get()->rotateY(0.5f);
         
         // You could also translate forward/backward, strafe, etc.
         // e.g. to move forward along the camera’s “forward” vector:
@@ -39,12 +44,13 @@ public:
         // getComponent<TransformComponent>()->transform.get()->translate(forwardDir * deltaTime * speed);
     }
 
-    void draw(Shader& shader) override {
+    void draw() override {
+        
         glm::mat4 V = getViewMatrix();
         glm::mat4 P = getProjectionMatrix();
-        shader.use();
-        shader.setMat4("view",       V);
-        shader.setMat4("projection", P);
+        (*shader).use();
+        (*shader).setMat4("view",       V);
+        (*shader).setMat4("projection", P);
     }
 
     // Cameras typically don’t draw a mesh themselves, so no need to override draw().
@@ -66,6 +72,7 @@ public:
     }
 
 private:
+    bool applyDefaultStartTransform = true;
     // Store a projection; the engine can set this once on resize, for example.
     glm::mat4 projection = glm::mat4(1.0f);
 };
