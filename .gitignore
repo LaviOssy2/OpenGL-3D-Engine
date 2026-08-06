@@ -1,0 +1,20 @@
+# IDE / Editor files
+.idea/
+.vscode/
+*.swp
+*.user
+
+# Android build outputs & caches
+.gradle/
+build/
+**/build/
+**/.cxx/
+**/.gradle/
+**/.externalNativeBuild/
+local.properties
+*.apk
+*.so
+
+# OS generated files
+.DS_Store
+Thumbs.db
