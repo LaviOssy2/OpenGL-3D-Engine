@@ -37,7 +37,6 @@ OpenGL-3D-Drone-Simulator/
 - With large models, performance degrade, potentially causing lag - on future improvements
 - The drone model is currently large, resulting in approximately a 2-minute load time for each run.
 
-
 ## Preview
 ![Drone Simulation Screenshot](drone_simulation.png)
 
