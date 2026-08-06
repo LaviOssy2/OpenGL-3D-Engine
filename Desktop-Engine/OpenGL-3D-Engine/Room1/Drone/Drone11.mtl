@@ -1,0 +1,13 @@
+# Blender 4.2.3 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl 肚子
+Ns 250.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.219526 0.205079 0.191202
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd planks.png

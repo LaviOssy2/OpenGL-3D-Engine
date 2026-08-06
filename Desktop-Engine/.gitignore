@@ -1,0 +1,43 @@
+# Visual Studio specific
+.vs/
+*.suo
+*.user
+*.vcxproj.user
+*.vcxproj.filters
+*.VC.db
+*.VC.opendb
+*.tlog/
+*.ipch/
+*.idb
+*.pdb
+*.ilk
+*.log
+*.obj
+*.cache
+*.dll.recipe
+*.lastbuildstate
+
+# Ignore Debug/Release builds
+x64/Debug/
+x64/Release/
+x86/Debug/
+x86/Release/
+
+# Ignore CMake build folder
+CMakeFiles/
+CMakeCache.txt
+
+# Ignore Vcpkg logs
+vcpkg.applocal.log
+
+# Ignore executable files
+*.exe
+*.dll
+*.lib
+*.exp
+
+# Ignore temporary and backup files
+*.bak
+*.tmp
+*.swp
+*.swo
